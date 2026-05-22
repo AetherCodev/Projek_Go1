@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | WEB2</title>
+</head>
+<body>
+    <h1>Register</h1>
+    <p>Selamat Datang di Halaman Register</p>
+
+    {{ if .Error }}
+        <p style="color:red">{{ .Error }}</p>
+    {{ end }}
+
+    <!-- Tambah ini! ↓ -->
+    <p id="errorJs" style="color:red; display:none"></p>
+
+    <form action="/register" method="POST" id="formRegister">
+        <label>Nama Depan</label><br>
+        <input type="text" name="namaDepan" placeholder="Nama Depan"><br><br>
+
+        <label>Nama Belakang</label><br>
+        <input type="text" name="namaBelakang" placeholder="Nama Belakang"><br><br>
+
+        <label>Username</label><br>
+        <input type="text" name="username" placeholder="example123"><br><br>
+
+        <label>Email</label><br>
+        <input type="email" name="email" placeholder="example@gmail.com"><br><br>
+
+        <label>Password</label><br>
+        <!-- Tambah id! ↓ -->
+        <input type="password" name="password" id="password"><br><br>
+
+        <label>Confirm Password</label><br>
+        <!-- Tambah id! ↓ -->
+        <input type="password" name="confirmPassword" id="confirmPassword"><br><br>
+
+        <button type="submit">Register</button>
+    </form>
+
+    <!-- Ganti path! ↓ -->
+    <script src="/static/register.js"></script>
+</body>
+</html>
