@@ -9,17 +9,25 @@ import (
 	"go1/auth"
 	"go1/users"
 )
+
 var tmpl = template.Must(
-    template.ParseGlob("templates/*.html"),
+    template.New("").ParseGlob("templates/*.html"),
 )
 
+func init() {
+    template.Must(tmpl.ParseGlob("templates/users/*.html"))
+    template.Must(tmpl.ParseGlob("templates/admin/*.html"))
+}
 
 func main() {
 	db.Koneksi()
 	auth.Tmpl = tmpl
+	users.Tmpl = tmpl
 	r := mux.NewRouter()
 	fs := http.FileServer(http.Dir("static"))
-    r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", fs),)
+    r.PathPrefix("/static/").Handler(
+        http.StripPrefix("/static/", fs),
+    )
     r.HandleFunc("/login", auth.HalamanLogin).Methods("GET")
     r.HandleFunc("/login", auth.Login).Methods("POST")
     r.HandleFunc("/register", auth.HalamanRegister).Methods("GET")
