@@ -22,10 +22,6 @@ func DashboardAdmin(w http.ResponseWriter, r *http.Request) {
     Tmpl.ExecuteTemplate(w, "admin/index.html", nil)
 }
 
-func DashboardUser(w http.ResponseWriter, r *http.Request) {
-    Tmpl.ExecuteTemplate(w, "user/index.html", nil)
-}
-
 func Login(w http.ResponseWriter, r *http.Request) {
 	koneksi := db.DB
 	username := r.FormValue("username")
