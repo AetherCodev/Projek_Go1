@@ -8,13 +8,13 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 type Akun struct {
-	idUsers int
-	namaDepan string
-	namaBelakang string
-	Username string
-	Email string
-	Password string
-	Role string
+    IdUsers      int    // huruf kapital
+    NamaDepan    string
+    NamaBelakang string
+    Username     string
+    Email        string
+    Password     string
+    Role         string
 }
 var Tmpl *template.Template
 var Store =sessions.NewCookieStore([]byte("anggajoki1"))
@@ -36,7 +36,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	var cekAkun []Akun
 	for rows.Next() {
 		var a Akun
-		err := rows.Scan(&a.idUsers, &a.Username, &a.Password, &a.Role)
+		err := rows.Scan(&a.IdUsers, &a.Username, &a.Password, &a.Role)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -65,7 +65,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	
 	session, _ := Store.Get(r, "login-session")
 	session.Values["username"] = cekAkun[0].Username
-	session.Values["id_users"] = cekAkun[0].idUsers
+	session.Values["id_users"] = cekAkun[0].IdUsers
 	session.Values["role"] = cekAkun[0].Role
 	session.Save(r, w)
 	

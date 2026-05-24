@@ -7,10 +7,15 @@ import (
 var DB *sql.DB
 func Koneksi(){
 	var err error
+	// AFTER:
 	DB, err = sql.Open("mysql", "root:@AnGgA123@tcp(localhost:3306)/web2")
 	if err != nil {
-		fmt.Println(err)
-		return
+    	fmt.Println("Gagal parse DSN:", err)
+     return
+	}
+	if err = DB.Ping(); err != nil {
+    	fmt.Println("Gagal konek ke database:", err)
+     return
 	}
 	fmt.Println("Koneksi berhasil")
 }

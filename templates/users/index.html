@@ -6,18 +6,17 @@
 	<title>Dashboard</title>
 </head>
 <body>
+    <a href="/users/profil">Profil</a>
     <h1>Daftar Produk</h1>
     {{ if .Error }}
         <p style="color:red">{{ .Error }}</p>
-    {{ end }}
-    <a href="/produk/add">Tambah Produk</a>
+    {{ end }}   
     <table border="1">
         <tr>    
             <th>No</th>
             <th>Nama Produk</th>
             <th>Harga</th>
             <th>Stok</th>
-            <th>Aksi</th>
         </tr>
         {{ if .Produk }}
             {{ range $i, $p := .Produk }}
@@ -26,12 +25,6 @@
                 <td>{{ $p.NamaProduk}}</td>
                 <td>{{ $p.Harga }}</td>
                 <td>{{ $p.Stok }}</td>
-                <td>
-                    <span>
-                        <a href="/produk/edit?id={{ $p.NamaProduk }}">edit</a>
-                        <a href="/produk/delete?id={{ $p.NamaProduk }}">delete</a>
-                    </span>
-                </td>
             </tr>
             {{ end }}
         {{ else }}
