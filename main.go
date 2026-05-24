@@ -28,6 +28,7 @@ func parseTemplates() (*template.Template, error) {
     subDirs := map[string]string{
         "templates/users/index.html": "users/index.html",
         "templates/admin/dashboard.html": "admin/dashboard.html",
+        "templates/users/profil.html" : "users/profil.html",
     }
     // Parse root templates
     if _, err := t.ParseFiles(files...); err != nil {

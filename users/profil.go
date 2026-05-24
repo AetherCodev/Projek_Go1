@@ -1,9 +1,10 @@
-package users
+	package users
 
 import (
 	"go1/auth"
 	"go1/db"
 	"net/http"
+	"fmt"
 )
 
 func ProfilUsers(w http.ResponseWriter, r *http.Request){
@@ -19,27 +20,18 @@ func ProfilUsers(w http.ResponseWriter, r *http.Request){
 		http.Redirect(w, r, "/login", http.StatusSeeOther)
 		return
 	}
-	row, err := koneksi.Query("Select nama_depan, nama_belakang, username, email from users where id_users = ?", id)
-	if err != nil { // ← pakai err di sini! ✅
-    	http.Error(w, err.Error(), http.StatusInternalServerError)
-    	return
-	}
-	defer row.Close()
-	var Profil []auth.Akun
-	for row.Next() {
-		var a auth.Akun
-		err := row.Scan(&a.NamaDepan, &a.NamaBelakang, &a.Username, &a.Email)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return	
-		}
-		Profil = append(Profil, a)
-	}
-	err = Tmpl.ExecuteTemplate(w, "users/profil.html", map[string]interface{}{
-    	"Profil": Profil,
-	})
-	if err != nil {
-     	http.Error(w, "Gagal render halaman", http.StatusInternalServerError)
-      	return
-	}
+	row := koneksi.QueryRow(
+    "SELECT nama_depan, nama_belakang, username, email FROM users WHERE id_users = ?", id,
+)
+	var a auth.Akun
+err := row.Scan(&a.NamaDepan, &a.NamaBelakang, &a.Username, &a.Email)
+if err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
+}
+execErr := Tmpl.ExecuteTemplate(w, "users/profil.html", a)
+if execErr != nil {
+    fmt.Println("Error render profil:", execErr.Error())
+    http.Error(w, "Gagal render halaman", http.StatusInternalServerError)
+}
 }
