@@ -9,6 +9,7 @@ import (
 	"github.com/gorilla/mux"
 	"go1/auth"
 	"go1/users"
+	"go1/admin"
 	"os"
 )
 
@@ -27,7 +28,7 @@ func parseTemplates() (*template.Template, error) {
     }
     subDirs := map[string]string{
         "templates/users/index.html": "users/index.html",
-        "templates/admin/dashboard.html": "admin/dashboard.html",
+        "templates/admin/index.html": "admin/index.html",
         "templates/users/profil.html" : "users/profil.html",
     }
     // Parse root templates
@@ -51,6 +52,8 @@ func main() {
 	db.Koneksi()
 	auth.Tmpl = tmpl
 	users.Tmpl = tmpl
+	admin.Tmpl = tmpl
+	
 	r := mux.NewRouter()
 	fs := http.FileServer(http.Dir("static"))
     r.PathPrefix("/static/").Handler(
@@ -62,6 +65,8 @@ func main() {
     r.HandleFunc("/register", auth.Register).Methods("POST")
     r.HandleFunc("/users/dashboard",users.DashboardUser).Methods("GET")
     r.HandleFunc("/users/profil", users.ProfilUsers).Methods("GET")
+    r.HandleFunc("/admin/dashboard",admin.DashboardAdmin).Methods("GET")
+    // r.HandleFunc("/admin/tambah",admin.TambahProduk).Methods("POST") 
     fmt.Println("Server jalan di port 8080")
     http.ListenAndServe(":8080", r)
 }
