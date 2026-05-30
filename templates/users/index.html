@@ -21,7 +21,7 @@
         {{ if .Produk }}
             {{ range $i, $p := .Produk }}
             <tr>
-                <td>{{ $i }}</td>
+                <td>{{ add $i 1 }}</td>
                 <td>{{ $p.NamaProduk}}</td>
                 <td>{{ $p.Harga }}</td>
                 <td>{{ $p.Stok }}</td>

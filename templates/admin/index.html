@@ -1,33 +1,33 @@
 <!-- FILE: templates/admin/index.html -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Admin</title>
-</head>
-<body>
-    <h1>Daftar Produk</h1><br><br>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Dashboard Admin</title>
+    </head>
+    <body>
+        <h1>Daftar Produk</h1>
+        <br /><br />
 
-    {{ if .Error }}
-        <p style="color:red">{{ .Error }}</p>
-    {{ end }}
+        {{ if .Error }}
+        <p style="color: red">{{ .Error }}</p>
+        {{ end }}
 
-    <a href="/admin/tambah_produk">Tambah Produk</a><br><br>
+        <a href="admin/tambah_produk">Tambah Produk</a><br /><br />
 
-    <table border="1">
-        <tr>
-            <th>No</th>
-            <th>Nama Produk</th>
-            <th>Harga</th>
-            <th>Stok</th>
-            <th>Ditambahkan Pada</th>
-            <th>Aksi</th>
-        </tr>
-        {{ if .Produk }}
-            {{ range $i, $p := .Produk }}
+        <table border="1">
             <tr>
-                <td>{{ $i }}</td>
+                <th>No</th>
+                <th>Nama Produk</th>
+                <th>Harga</th>
+                <th>Stok</th>
+                <th>Ditambahkan Pada</th>
+                <th>Aksi</th>
+            </tr>
+            {{ if .Produk }} {{ range $i, $p := .Produk }}
+            <tr>
+                <td>{{ add $i 1 }}</td>
                 <td>{{ $p.NamaProduk }}</td>
                 <td>{{ $p.Harga }}</td>
                 <td>{{ $p.Stok }}</td>
@@ -37,12 +37,11 @@
                     <a href="/admin/delete?id={{ $p.IdProduk }}">Hapus</a>
                 </td>
             </tr>
+            {{ end }} {{ else }}
+            <tr>
+                <td colspan="6">Belum ada produk!</td>
+            </tr>
             {{ end }}
-        {{ else }}
-        <tr>
-            <td colspan="6">Belum ada produk!</td>
-        </tr>
-        {{ end }}
-    </table>
-</body>
+        </table>
+    </body>
 </html>

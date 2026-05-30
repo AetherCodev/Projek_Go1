@@ -8,7 +8,7 @@ var DB *sql.DB
 func Koneksi(){
 	var err error
 	// AFTER:
-	DB, err = sql.Open("mysql", "root:@AnGgA123@tcp(localhost:3306)/web2")
+	DB, err = sql.Open("mysql", "root:@AnGgA123@tcp(localhost:3306)/web2?parseTime=true&loc=Asia%2FMakassar")
 	if err != nil {
     	fmt.Println("Gagal parse DSN:", err)
      return
